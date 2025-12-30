@@ -28,7 +28,7 @@
         </a> --}}
         @endrole
         @role('user')
-        <a href="" wire:navigate class="block px-4 py-2 rounded-md text-gray-700 hover:bg-gray-100 ">
+        <a href="{{ route('user.peminjaman') }}" wire:navigate class="block px-4 py-2 rounded-md text-gray-700 hover:bg-gray-100 {{ request()->routeIs('user.peminjaman') ? 'bg-gray-100 font-semibold' : '' }}">
             Pinjam Alat
         </a>
         @endrole

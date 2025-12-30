@@ -45,4 +45,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function peminjamanHeaders()
+    {
+        return $this->hasMany(PeminjamanAlatHeader::class, 'user_id', 'id');
+    }
+
+    public function historyPerubahans()
+    {
+        return $this->hasMany(HistoryPerubahan::class, 'user_id', 'id');
+    }
 }
