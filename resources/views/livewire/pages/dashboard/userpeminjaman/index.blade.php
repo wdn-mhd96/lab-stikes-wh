@@ -20,14 +20,7 @@
                     <p class="text-md mb-4">Kondisi: {{ $item->condition }}</p>
                 </div>
             </div>
-            <div class="flex justify-between items-center">
-                <div x-data="{ quantity: {{ $quantity[$item->id] ?? 1 }} }" class="flex items-center gap-2">
-                    <button @click="quantity.{{ $item->id }} = Math.max(1, quantity.{{ $item->id }} - 1)">-</button>
-                    <input type="number" id="quantity-{{ $item->id }}" min="1" max="{{ $item->quantity }}" wire:model="quantity.{{ $item->id }}" class="border border-gray-300 rounded-md p-2 w-24">
-                    <button @click="quantity.{{ $item->id }} = Math.min({{ $item->quantity }}, quantity.{{ $item->id }} + 1)">+</button>
-                </div>
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded {{ $item->quantity == 0 ? 'opacity-50 cursor-not-allowed' : '' }}" {{ $item->quantity == 0 ? 'disabled' : '' }}><x-icon name="arrow-right"></x-icon></button>
-            </div>
+            
         </div>
         @endforeach
     </div>
