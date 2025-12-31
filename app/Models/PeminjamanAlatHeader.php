@@ -25,6 +25,10 @@ class PeminjamanAlatHeader extends Model
     public $timestamps = true;
     public $incrementing = true;
 
+    protected $casts = [
+        "tanggal_pinjam" => "datetime",
+    ];
+
     public function status()
     {
         return $this->belongsTo(PeminjamanStatus::class, 'status_id', 'id');
