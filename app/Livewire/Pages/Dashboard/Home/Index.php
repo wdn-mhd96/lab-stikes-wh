@@ -7,12 +7,30 @@ use Livewire\Attributes\Layout;
 
 class Index extends Component
 {
-    public $check;
+    public $totalPeminjaman;
+    public $peminjamanDiajukan;
+    public $peminjamanHariIni;
+    public $peminjamanSelesai;
+    public $peminjamanDitolak;
+    public $Inventory;
+    public $oos;
+
+    public $totalPeminjamanUser;
+    public $peminjamanAktifUser;
+
     #[Layout('layouts.dashboard')]
 
     public function mount()
     {
-        
+        $this->totalPeminjaman = \App\Models\PeminjamanAlatHeader::count();
+        $this->peminjamanHariIni = \App\Models\PeminjamanAlatHeader::where("tanggal_pinjam", now()->format("Y-m-d"))->count();
+        $this->peminjamanSelesai = \App\Models\PeminjamanAlatHeader::where("status_id", 4)->count();
+        $this->peminjamanDitolak = \App\Models\PeminjamanAlatHeader::where("status_id", 3)->count();
+        $this->peminjamanDiajukan = \App\Models\PeminjamanAlatHeader::where("status_id", 1)->count();
+        $this->peminjamanHariIni = \App\Models\PeminjamanAlatHeader::where("tanggal_pinjam", now()->format("Y-m-d"))->count();
+
+        $this->Inventory = \App\Models\Inventory::count();
+        $this->oos = \App\Models\Inventory::where("quantity", "<", 1)->count();
     }
     public function render()
     {

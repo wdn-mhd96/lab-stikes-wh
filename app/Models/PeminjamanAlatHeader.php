@@ -14,6 +14,8 @@ class PeminjamanAlatHeader extends Model
         'ruangan_id',
         'tanggal_pinjam',
         'tanggal_kembali',
+        'jam_mulai',
+        'jam_selesai',
         'nim',
         'nama_peminjam',
     ];

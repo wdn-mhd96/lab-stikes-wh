@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('alat_id');
             $table->integer('quantity_diajukan');
             $table->integer('quantity_disetujui')->nullable();
-            $table->integer('quantity_dikembalikan')->default(0);
+            $table->integer('quantity_dikembalikan')->default(0)->nullable();
             $table->timestamps();
 
             $table->foreign('peminjaman_id')->references('id')->on('peminjaman_alat_headers')->onDelete('cascade');

@@ -52,7 +52,16 @@
                     showConfirmButton: false,
                 });
             })
+            new TomSelect('.tom-select', {
+                create: false,
+                sortField: {
+                    field: 'text',
+                    direction: 'asc'
+                }
+            });
         })
+
+
         </script>
     </body>
 </html>

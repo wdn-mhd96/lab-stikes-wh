@@ -12,6 +12,7 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
     });
     Route::middleware(['role:user'])->group(function () {
         Route::get('/peminjaman', \App\Livewire\Pages\Dashboard\UserPeminjaman\Index::class)->name('user.peminjaman');
+        Route::get('/ajukan-peminjaman', \App\Livewire\Pages\Dashboard\UserPeminjaman\Pengajuan::class)->name('user.pengajuan');
     });
 });
 
