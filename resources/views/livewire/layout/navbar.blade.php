@@ -1,20 +1,4 @@
-<?php
 
-use App\Livewire\Actions\Logout;
-use Livewire\Volt\Component;
-
-new class extends Component
-{
-    /**
-     * Log the current user out of the application.
-     */
-    public function logout(Logout $logout): void
-    {
-        $logout();
-
-        $this->redirect('/', navigate: true);
-    }
-}; ?>
 
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100 flex justify-between items-center">
     <!-- Primary Navigation Menu -->
@@ -48,8 +32,8 @@ new class extends Component
                     <hr class="my-2">
                     @forelse (auth()->user()->unreadNotifications as $notification)
                         <x-dropdown-link>
-                            <a href="/dashboard/detail/{{$notification->data['data']['id'] ?? ''}}"  class="p-3 text-[0.7rem] text-gray-600">
-                                    {{ $notification->data['message'] }} - {{$notification->data['data']['nama_peminjam'] ?? ''}}
+                            <a wire:click.prevent="viewNotification({{ $notification->id }})" class="p-3 text-[0.7rem] text-gray-600">
+                                    <span class="font-semibold">{{ $notification->data['message'] }}</span> - {{$notification->data['data']['code'] ?? ''}}
                             </a>
                         </x-dropdown-link>
                     @empty

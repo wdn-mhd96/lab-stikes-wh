@@ -38,7 +38,7 @@ class Index extends Component
         [
             'inventory' => \App\Models\Inventory::where('item_code', 'like', '%'.$this->search.'%')
                           ->orWhere('item_name', 'like', '%'.$this->search.'%')
-                            ->orderBy('item_name', 'ASC')->paginate(10),
+                            ->orderBy('item_name', 'ASC')->paginate(8),
         ]);
     }
 
@@ -75,6 +75,14 @@ class Index extends Component
     public function ajukanPeminjaman() 
     {
         return redirect('/dashboard/ajukan-peminjaman');
+    }
+
+    public function kosongkanList()
+    {
+        $key = 'cart_' . auth()->id();
+        session()->forget($key);
+        $this->cart = [];
+        $this->dispatch("notify", ['title' => 'success', 'text' => 'List Peminjaman Telah Dikosongkan', 'icon' => 'success']); 
     }
 
 }

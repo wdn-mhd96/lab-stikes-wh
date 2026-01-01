@@ -14,7 +14,7 @@
             Dashboard
         </a>
         @role('admin')
-        <a href="{{ route('admin.peminjaman')}}" wire:navigate class="block px-4 py-2 rounded-md text-gray-700 hover:bg-gray-100 {{ request()->is('admin.peminjaman') ? 'bg-gray-100 font-semibold' : '' }}">
+        <a href="{{ route('admin.peminjaman')}}" wire:navigate class="block px-4 py-2 rounded-md text-gray-700 hover:bg-gray-100 {{ request()->routeIs('admin.peminjaman') ? 'bg-gray-100 font-semibold' : '' }}">
             List Peminjaman
         </a>
         <a href="{{ route('admin.users') }}" wire:navigate class="block px-4 py-2 rounded-md text-gray-700 hover:bg-gray-100 {{ request()->routeIs('admin.users') ? 'bg-gray-100 font-semibold' : '' }}">

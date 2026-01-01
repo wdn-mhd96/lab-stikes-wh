@@ -4,6 +4,8 @@ namespace App\Livewire\Pages\Dashboard\Userpeminjaman;
 
 use Livewire\Component;
 use Livewire\Attributes\Layout;
+use App\Notifications\NotifPengajuan;
+use Illuminate\Support\Facades\Notification;
 
 class Pengajuan extends Component
 {
@@ -66,24 +68,75 @@ class Pengajuan extends Component
             $this->dispatch("notify", ['title' => 'error', 'text' => 'Anda Masih Memiliki Peminjaman Aktif, Silahkan Selesaikan Terlebih Dahulu', 'icon' => 'error']);
         }
         else {
+            
             try {
-                $insertheader = \App\Models\PeminjamanAlatHeader::create($data);
-                $detaildata = [];
-                foreach($this->cart as $id => $cart) {
-                    $detaildata[] = [
-                        "peminjaman_id" => $insertheader->id,
-                        "alat_id" => $id,
-                        "quantity_diajukan" => $cart
-                    ];
-                }
-                \App\Models\PeminjamanAlatDetail::insert($detaildata);
-                $this->dispatch("notify", ['title' => 'Pengajuan Berhasil', 'text' => 'Berhasil Mengajukan Peminjaman Alat, Silahkan datang Ke Admin Untuk Konfirmasi', 'icon' => 'success']);
-                session()->forget("cart_".auth()->id());
-                return redirect("/dashboard/peminjaman");
-            }
-            catch(\Illuminate\Database\QueryException $e) {
-                $this->dispatch("notify", ['title' => 'Error 500', 'text' => 'Gagal Mengajukan Peminjaman, Server Error'. $e, 'icon' => 'error']);
+                \Illuminate\Support\Facades\DB::transaction(function () use ($data) {
 
+                        
+                \App\Models\Ruangan::where('id', $this->ruanganId)
+                ->lockForUpdate()
+                ->first();
+                
+                $existingDates = \App\Models\PeminjamanAlatHeader::where('tanggal_pinjam', $this->tgl_peminjaman)
+                ->where('ruangan_id', $this->ruanganId)
+                ->whereIn('status_id', [1, 2])
+                ->where(function($query) {
+                    $query->where(function($q) {
+                        $q->where('jam_mulai', '<', $this->jam_selesai)
+                        ->where('jam_selesai', '>', $this->jam_mulai);
+                    });
+                })
+                ->lockForUpdate()
+                ->exists();
+
+                if ($existingDates) {
+                    throw new \Exception('Ruangan sudah dipesan');
+                }
+                do {
+                    $code = 'LWH-' . now()->format('Md-Y') . strtoupper(bin2hex(random_bytes(3)));
+                    $codeExists = \App\Models\PeminjamanAlatHeader::where('code', $code)->exists();
+                }
+                while ($codeExists);
+                $data['code'] = $code;
+
+                    $insertheader = \App\Models\PeminjamanAlatHeader::create($data);
+
+                    $detaildata = [];
+
+                    foreach ($this->cart as $id => $cart) {
+                        $detaildata[] = [
+                            'peminjaman_id' => $insertheader->id,
+                            'alat_id' => $id,
+                            'quantity_diajukan' => $cart,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ];
+                    }
+
+                    if (empty($detaildata)) {
+                        throw new \Exception('Cart kosong');
+                    }
+
+                    \App\Models\PeminjamanAlatDetail::insert($detaildata);
+
+                    // Notify Admin (HARUS DI DALAM TRANSACTION)
+                    $adminUsers = \App\Models\User::role('admin')->get();
+                    Notification::send($adminUsers, new NotifPengajuan($insertheader));
+
+                    session()->forget('cart_' . auth()->id());
+                });
+
+                return redirect('/dashboard/peminjaman');
+
+            } catch (\Throwable $e) {
+
+                report($e); // log ke laravel.log
+
+                $this->dispatch('notify', [
+                    'title' => 'Error',
+                    'text'  => 'Gagal Mengajukan Peminjaman '. $e->getMessage(),
+                    'icon'  => 'error'
+                ]);
             }
         }
     }

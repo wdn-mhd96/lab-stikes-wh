@@ -1,14 +1,21 @@
 <div x-data="{open : $wire.entangle('openModal')}">
-    <div class="flex justify-end">
+    <div class="flex justify-center md:justify-end gap-6">
         @if(count(session()->get("cart_".auth()->id()) ?? []))
         <button wire:click="ajukanPeminjaman" x-data="{cart:$wire.entangle('cart')}" class="relative 
-            inline-flex items-center px-2 py-1  rounded text-gray-400 hover:text-gray-600 mb-6 ">
-            <div>
-                <x-icon name="clipboard-document-list" class="w-16 h-16 "></x-icon>
+            inline-flex items-center px-2 py-1  rounded text-gray-400 hover:text-gray-600 mb-6">
+            <div class="flex flex-col justify-center items-center">
+                <x-icon name="clipboard-document-list" class="text-center w-12 h-12 "></x-icon>
                 <span class="text-wrap">Pengajuan</span>
             </div>
-            <div class="absolute top-0 right-0 py-1 px-[9px] bg-violet-600 text-[0.7rem] rounded-full text-white">{{ count(session()->get("cart_". auth()->id()) ?? [])}}</div>
-        </button>  
+            <div class="absolute top-0 right-2 py-1 px-[9px] bg-violet-600 text-[0.7rem] rounded-full text-white">{{ count(session()->get("cart_". auth()->id()) ?? [])}}</div>
+        </button>
+        <button wire:click="kosongkanList" class="relative 
+            inline-flex items-center justify-center px-2 py-1  rounded text-red-400 hover:text-red-600 mb-6 ">
+            <div class="flex flex-col justify-center items-center">
+                <x-icon name="trash" class="w-12 h-12 "></x-icon>
+                <span class="text-wrap">Kosongkan</span>
+            </div>
+        </button>
         @endif 
     </div>
     <div class="mt-3 relative mb-3">
@@ -33,20 +40,22 @@
                 <div>
                     <h2 class="text-lg font-semibold mb-4">{{ $item->item_name }}</h2>
                     <p class="text-md mb-2">Kode: {{ $item->item_code }}</p>
-                    <p class="text-md mb-2">Status: {{ $item->quantity > 0 ? "Tersedia" : "Kosong"}}</p>
+                    <p class="text-center text-md mb-2 font-bold text-white py-1 px-3 rounded {{ $item->quantity > 0 ? "bg-green-600" : "bg-red-600"}}">{{ $item->quantity > 0 ? "Tersedia" : "Kosong"}}</p>
                 </div>
             </div>
-            <div class="flex justify-between items-center" x-data="{ item: $wire.entangle('quantity.{{$item->id}}').live}">
-                <div>
-                    <button @click="item > 1 ? item-- : 1" class="bg-emerald-600 hover:bg-emerald-700 py-1 px-3 text-white rounded">-</button>
-                    <input type="number" x-model="item" class="w-[50px] focus:outline-none focus:border-none text-center text-gray-400 outline-none border-none
-                    [appearance:textfield]
-                    [&::-webkit-outer-spin-button]:appearance-none
-                    [&::-webkit-inner-spin-button]:appearance-none" read-only>
-                    <button @click="item++" class="bg-emerald-600 hover:bg-emerald-700 py-1 px-3 text-white rounded">+</button>
+            @if ( $item->quantity > 0)
+                <div class="flex justify-between items-center" x-data="{ item: $wire.entangle('quantity.{{$item->id}}').live}">
+                    <div>
+                        <button @click="item > 1 ? item-- : 1" class="bg-emerald-600 hover:bg-emerald-700 py-1 px-3 text-white rounded">-</button>
+                        <input type="number" x-model="item" class="w-[50px] focus:outline-none focus:border-none text-center text-gray-400 outline-none border-none
+                        [appearance:textfield]
+                        [&::-webkit-outer-spin-button]:appearance-none
+                        [&::-webkit-inner-spin-button]:appearance-none" read-only>
+                        <button @click="item++" class="bg-emerald-600 hover:bg-emerald-700 py-1 px-3 text-white rounded">+</button>
+                    </div>
+                    <button class="bg-violet-600 hover:bg-violet-700 text-white py-2 px-4 rounded" wire:click="addToCart({{$item->id}})"><x-icon name="arrow-right" /></button>
                 </div>
-                <button class="bg-violet-600 hover:bg-violet-700 text-white py-2 px-4 rounded" wire:click="addToCart({{$item->id}})"><x-icon name="arrow-right" /></button>
-            </div>
+            @endif
             
         </div>
         @endforeach

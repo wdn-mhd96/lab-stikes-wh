@@ -18,6 +18,7 @@ class PeminjamanAlatHeader extends Model
         'jam_selesai',
         'nim',
         'nama_peminjam',
+        'code',
     ];
 
     protected $primaryKey = 'id';
