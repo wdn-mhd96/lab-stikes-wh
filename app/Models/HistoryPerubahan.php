@@ -13,6 +13,7 @@ class HistoryPerubahan extends Model
         'old_status_id',
         'new_status_id',
         'user_id',
+        'comment',
     ];
 
     protected $primaryKey = 'id';
@@ -27,5 +28,14 @@ class HistoryPerubahan extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function oldStatus()
+    {
+        return $this->belongsTo(PeminjamanStatus::class, 'old_status_id', 'id');
+    }
+    public function newStatus()
+    {
+        return $this->belongsTo(PeminjamanStatus::class, 'new_status_id', 'id');
     }
 }

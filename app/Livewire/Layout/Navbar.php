@@ -11,20 +11,28 @@ class Navbar extends Component
         return view('livewire.layout.navbar');
     }
 
-    public function viewNotification($notificationId)
+   public function viewNotification($notificationId)
     {
-        $notification = auth()->user()->notifications()->where('id', $notificationId)->first();
+        $notification = auth()->user()
+            ->notifications()
+            ->where('id', $notificationId)
+            ->first();
 
-        if ($notification) {
-            $notification->markAsRead();
-            $peminjamanId = $notification->data['data']['id'] ?? null;
-
-            if ($peminjamanId) {
-                return redirect()->route('admin.detail', ['id' => $peminjamanId]);
-            }
+        if (! $notification) {
+            return;
         }
 
-        return redirect()->back();
+        $notification->markAsRead();
+
+        $peminjamanId = $notification->data['data']['id'] ?? null;
+
+        if ($peminjamanId) {
+            return $this->redirectRoute(
+                'admin.detail',
+                ['id' => $peminjamanId],
+                navigate: true
+            );
+        }
     }
 
     public function logout()

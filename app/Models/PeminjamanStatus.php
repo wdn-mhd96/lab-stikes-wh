@@ -9,7 +9,7 @@ class PeminjamanStatus extends Model
     protected $table = 'peminjaman_statuses';
 
     protected $fillable = [
-        'name',
+        'status_name',
     ];
     protected $primaryKey = 'id';
     protected $keyType = 'int';

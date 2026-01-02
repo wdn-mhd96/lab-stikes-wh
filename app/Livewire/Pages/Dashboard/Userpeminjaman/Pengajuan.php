@@ -93,7 +93,7 @@ class Pengajuan extends Component
                     throw new \Exception('Ruangan sudah dipesan');
                 }
                 do {
-                    $code = 'LWH-' . now()->format('Md-Y') . strtoupper(bin2hex(random_bytes(3)));
+                    $code = 'LWH-' . now()->format('md-Y-') . strtoupper(bin2hex(random_bytes(3)));
                     $codeExists = \App\Models\PeminjamanAlatHeader::where('code', $code)->exists();
                 }
                 while ($codeExists);
@@ -118,6 +118,13 @@ class Pengajuan extends Component
                     }
 
                     \App\Models\PeminjamanAlatDetail::insert($detaildata);
+                    \App\Models\HistoryPerubahan::create([
+                        'peminjaman_id' => $insertheader->id,
+                        'user_id' => auth()->id(),
+                        'new_status_id' => 1,
+                        'comment' => 'Pengajuan Peminjaman Alat'
+
+                    ]);
 
                     // Notify Admin (HARUS DI DALAM TRANSACTION)
                     $adminUsers = \App\Models\User::role('admin')->get();

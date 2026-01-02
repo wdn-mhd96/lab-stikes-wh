@@ -38,13 +38,31 @@
                     <tr class="border-b border-gray-300  text-sm {{ $index % 2 !== 0 ? 'bg-white' : 'bg-gray-100' }}">
                         <td class="px-4 py-2 text-center">{{ $index + 1}}</td>
                         <td class="px-4 py-2">{{ $pinjam->user->name }}</td>
-                        <td class="px-4 py-2">{{ $pinjam->status->status_name }}</td>
+                        <td class="px-4 py-2">
+                            <span class=" py-2 px-3 rounded-full text-white
+                                @if($pinjam->status->id == 1)
+                                bg-amber-600
+                                @elseif($pinjam->status->id == 2)
+                                bg-emerald-600
+                                @elseif($pinjam->status->id == 3)
+                                bg-red-600
+                                @elseif($pinjam->status->id == 4)
+                                bg-sky-600
+                                @endif
+                            ">
+                                {{ $pinjam->status->status_name}}
+                            </span>
+                        </td>
                         <td class="px-4 py-2 text-center">{{ $pinjam->details_count }}</td>
-                        <td class="px-4 py-2 text-center">{{ $pinjam->tanggal_pinjam }}</td>
-                        <td class="px-4 py-2 text-center">{{ $pinjam->jam_mulai }} - {{ $pinjam->jam_selesai }}</td>
+                        <td class="px-4 py-2 text-center">{{ \Carbon\Carbon::parse($pinjam->tanggal_pinjam)->format('l, d M Y')}}</td>
+                        <td class="px-4 py-2 text-center">
+                            {{ \Carbon\Carbon::parse($pinjam->jam_mulai)->format('H:i')}}
+                            - 
+                            {{ \Carbon\Carbon::parse($pinjam->jam_selesai)->format('H:i')}}
+                        </td>
                         
                         <td class="px-4 py-2 flex justify-center gap-2 items-center">
-                            <button wire:click="editInventory({{ $pinjam->id }})" class="bg-emerald-600 text-white hover:bg-emerald-700 rounded-md py-1 px-3 text-sm">Confirm</button>
+                            <a wire:navigate href="{{ route('admin.detail', ['id' => $pinjam->id])}}" class="bg-emerald-600 text-white hover:bg-emerald-700 rounded-md py-1 px-3 text-sm">Confirm</a>
                         </td>
                     </tr>
                     @endforeach

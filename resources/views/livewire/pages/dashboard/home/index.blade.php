@@ -13,7 +13,7 @@
             <x-icon name="clipboard-document-list" class="text-amber-600 w-10 h-10"></x-icon>
             <h2 class="text-lg font-semibold mb-4">Peminjaman Masuk (Pengajuan)</h2>
             <p class="text-6xl font-bold">{{ $peminjamanDiajukan }}</p>
-            <a href="{{ route('admin.users') }}" class="mt-6 bg-violet-600 float-right text-white hover:bg-violet-700 rounded-md py-2 px-4"><x-icon name="arrow-right"></x-icon></a>
+            <a href="{{ route('admin.peminjaman') }}" class="mt-6 bg-violet-600 float-right text-white hover:bg-violet-700 rounded-md py-2 px-4"><x-icon name="arrow-right"></x-icon></a>
         </div>
         <div class="bg-slate-50 shadow rounded-lg p-6">
             <x-icon name="clipboard-document-list" class="text-emerald-600 w-10 h-10"></x-icon>

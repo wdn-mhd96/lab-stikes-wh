@@ -32,8 +32,8 @@
                     <hr class="my-2">
                     @forelse (auth()->user()->unreadNotifications as $notification)
                         <x-dropdown-link>
-                            <a wire:click.prevent="viewNotification({{ $notification->id }})" class="p-3 text-[0.7rem] text-gray-600">
-                                    <span class="font-semibold">{{ $notification->data['message'] }}</span> - {{$notification->data['data']['code'] ?? ''}}
+                            <a wire:click="viewNotification('{{ $notification->id }}')" class="p-3 text-[0.7rem] text-gray-600 cursor-pointer">
+                                <span class="font-semibold">{{ $notification->data['message'] }}</span> - {{$notification->data['data']['code'] ?? ''}}
                             </a>
                         </x-dropdown-link>
                     @empty
