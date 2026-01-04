@@ -2,9 +2,11 @@
 
 namespace App\Livewire\Pages\Dashboard\Listpeminjaman;
 
+use Illuminate\Notifications\Notification;
 use Livewire\Component;
 use Livewire\Attributes\Url;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 
 
 
@@ -21,26 +23,33 @@ class Detail extends Component
     public $approvedQty = [];
     public $returnedQty = [];
     public $peminjaman;
+    public $history;
     public $comment = '';
 
+    #[on('notify')]
+    public function refreshList($notify)
+    {
+    }
     public function mount()
     {
-         $peminjaman = \App\Models\PeminjamanAlatHeader::with('details.alat')
+        $peminjaman = \App\Models\PeminjamanAlatHeader::with('details.alat')
         ->findOrFail($this->id);
 
         foreach ($peminjaman->details as $detail) {
             $this->approvedQty[$detail->id] = $detail->quantity_disetujui ?? $detail->quantity_diajukan;
             $this->returnedQty[$detail->id] = $detail->quantity_disetujui ?? 0;
         }
+        
+        
     }
     public function render()
     {
         $this->peminjaman = \App\Models\PeminjamanAlatHeader::with(['status','details.alat','user','ruangan'])
-                        ->where('id', $this->id)->first();
-        $history = \App\Models\HistoryPerubahan::with(['user', 'oldStatus', 'newStatus'])->where('peminjaman_id', $this->id)->orderBy('created_at', 'ASC')->get(); 
+                ->where('id', $this->id)->first();
+        $this->history = \App\Models\HistoryPerubahan::with(['user', 'oldStatus', 'newStatus'])->where('peminjaman_id', $this->id)->orderBy('created_at', 'ASC')->get(); 
         return view('livewire.pages.dashboard.listpeminjaman.detail', [
             'peminjaman' => $this->peminjaman,
-            'history'    => $history
+            'history'    => $this->history
         ]);
     }
 
@@ -111,16 +120,25 @@ class Detail extends Component
                 'status_id' => $newstatus
             ]);
 
+            $notfiedUser = \App\Models\User::where('id', $header->user_id)->get();
+            Notification::send($notfiedUser, new \App\Notifications\NotifPengajuan($header, "Peminjaman Anda Diperbarui", "user.detail"));
+
+            $notifiedAdmin = \App\Models\User::where('role', 'admin')->where('id', '!=', auth()->id())->get();
+            Notification::send($notifiedAdmin, new \App\Notifications\NotifPengajuan($header, "Peminjaman Diperbarui", "admin.detail"));
+
             
         });
-
-        $this->reset();
-
         $this->dispatch('notify', [
             'title' => 'Berhasil',
             'text'  => 'Berhasil Memproses Peminjaman',
             'icon'  => 'success'
         ]);
+        $this->reset([
+            'approve',
+            'reject',
+            'comment',
+        ]);
+
         }
         catch(\Throwable $e) {
              $this->dispatch('notify', [
@@ -129,6 +147,6 @@ class Detail extends Component
                 'icon'  => 'error'
             ]);
         }
-        $this->dispatch('refresh-page');
+
     }
 }

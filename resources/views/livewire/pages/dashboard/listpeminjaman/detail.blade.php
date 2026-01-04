@@ -7,6 +7,9 @@
     @else
         <div class="flex justify-between items-center">
             <h1 class="font-bold text-xl md:text-2xl text-gray-600 uppercase">Detail Peminjaman Alat</h1>
+            <div class="flex justify-center items-center gap-2">
+                <button wire:click="cetakForm" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">Cetak Form</button>
+            </div>
         </div>
 
         <table class="text-gray-500 w-full mt-3">
@@ -74,7 +77,7 @@
             </div>
             @endif
         </div>
-        <form>
+        <form wire:submit.prevent="prosesPengajuan" >
         <table class="w-full border border-gray-300 rounded-lg overflow-hidden">
                 <thead>
                     <tr class="bg-violet-600 text-white">
@@ -85,7 +88,8 @@
                         @if($approve || $peminjaman->status_id == 2)
                             <th class="px-4 py-2">Qty Disetujui</th>
                         @endif
-                        @if($peminjaman->status_id == 2 || $peminjaman->status_id == 4)
+                        @if($peminjaman->status_id == 4)
+                            <th class="px-4 py-2">Qty Disetujui</th>
                             <th class="px-4 py-2">Qty Dikembalikan</th>
                         @endif
                     </tr>
@@ -102,7 +106,7 @@
                                 <input
                                     type="number"
                                     min="0"
-                                    max="{{ $detail->qty }}"
+                                    max="{{ $detail->quantity_diajukan }}"
                                     wire:model.defer="approvedQty.{{ $detail->id }}"
                                     class="input"
                                 >
@@ -114,13 +118,14 @@
                                 <input
                                     type="number"
                                     min="0"
-                                    max="{{ $detail->qty }}"
+                                    max="{{ $detail->quantity_disetujui }}"
                                     wire:model.defer="returnedQty.{{ $detail->id }}"
                                     class="input"
                                 >
                             </td>
                         @endif
                         @if($peminjaman->status_id ==  4)
+                            <td class="px-4 py-2 text-center"> {{ $detail->quantity_disetujui}}</td>
                             <td class="px-4 py-2 text-center"> {{ $detail->quantity_dikembalikan}}</td>
                         @endif
                     </tr>
@@ -134,7 +139,7 @@
                         </tr>
                         <tr class="mt-3">
                             <td colspan ="@if($approve) 5 @elseif($peminjaman->status_id == 2) 6 @else 4 @endif" class="text-right">
-                                <button wire:click="prosesPengajuan" type="submit" class="bg-violet-600 text-white py-2 px-4 rounded hover:bg-violet-700">@if($approve) Setujui @elseif($peminjaman->status_id == 2) Selesaikan @else Tolak @endif</button>
+                                <button type="submit" class="bg-violet-600 text-white py-2 px-4 rounded hover:bg-violet-700">@if($approve) Setujui @elseif($peminjaman->status_id == 2) Selesaikan @else Tolak @endif</button>
                             </td>
                         </tr>
                     @endif

@@ -16,9 +16,13 @@ class NotifPengajuan extends Notification
      */
 
     public $pengajuanData = [];
-    public function __construct($data)
+    public $message;
+    public $route;
+    public function __construct($data, $message = "Pengajuan Peminjaman Baru", $route = "admin.detail")
     {
         $this->pengajuanData = $data;
+        $this->message = $message;
+        $this->route = $route;
     }
 
     /**
@@ -57,9 +61,9 @@ class NotifPengajuan extends Notification
     public function toDatabase(object $notifiable): array
     {
         return [
-            'message' => 'Pengajuan Baru',
-            'type' => 'pengajuan_baru',
-            'data' => $this->pengajuanData
+            'message' => $this->message,
+            'data' => $this->pengajuanData,
+            'route' => $this->route
         ];
     }
 }

@@ -28,7 +28,7 @@ class Navbar extends Component
 
         if ($peminjamanId) {
             return $this->redirectRoute(
-                'admin.detail',
+                $notification->data['route'],
                 ['id' => $peminjamanId],
                 navigate: true
             );

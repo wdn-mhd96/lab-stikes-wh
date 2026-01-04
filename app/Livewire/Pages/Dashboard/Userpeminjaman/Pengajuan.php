@@ -128,7 +128,7 @@ class Pengajuan extends Component
 
                     // Notify Admin (HARUS DI DALAM TRANSACTION)
                     $adminUsers = \App\Models\User::role('admin')->get();
-                    Notification::send($adminUsers, new NotifPengajuan($insertheader));
+                    Notification::send($adminUsers, new NotifPengajuan($insertheader, "Pengajuan Peminjaman Baru", "admin.detail"));
 
                     session()->forget('cart_' . auth()->id());
                 });

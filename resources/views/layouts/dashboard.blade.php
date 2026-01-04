@@ -52,9 +52,6 @@
                     showConfirmButton: false,
                 });
             })
-             Livewire.on('refresh-page', () => {
-                window.location.reload();
-            });
             new TomSelect('.tom-select', {
                 create: false,
                 sortField: {

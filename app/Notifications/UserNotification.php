@@ -7,16 +7,13 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ProsesPengajuan extends Notification
+class UserNotification extends Notification
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public $oldStatus;
-    public $newStatus;
-    public $actor;
     public function __construct()
     {
         //
@@ -29,7 +26,7 @@ class ProsesPengajuan extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database'];
+        return ['mail'];
     }
 
     /**
@@ -53,10 +50,5 @@ class ProsesPengajuan extends Notification
         return [
             //
         ];
-    }
-
-    public function toDatabase(object $notifiable)
-    {
-        return ;
     }
 }
