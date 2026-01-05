@@ -17,6 +17,8 @@ class Index extends Component
 
     public $totalPeminjamanUser;
     public $peminjamanAktifUser;
+    public $peminjamanSelesaiUser;
+    public $peminjamanDitolakUser;
 
     #[Layout('layouts.dashboard')]
 
@@ -28,6 +30,11 @@ class Index extends Component
         $this->peminjamanDitolak = \App\Models\PeminjamanAlatHeader::where("status_id", 3)->count();
         $this->peminjamanDiajukan = \App\Models\PeminjamanAlatHeader::where("status_id", 1)->count();
         $this->peminjamanHariIni = \App\Models\PeminjamanAlatHeader::where("tanggal_pinjam", now()->format("Y-m-d"))->count();
+
+        $this->totalPeminjamanUser= \App\Models\PeminjamanAlatHeader::where('user_id', auth()->id())->count();
+        $this->peminjamanAktifUser= \App\Models\PeminjamanAlatHeader::whereIn('status_id',[1,2])->where('user_id', auth()->id())->count();
+        $this->peminjamanSelesaiUser= \App\Models\PeminjamanAlatHeader::where('status_id',4)->where('user_id', auth()->id())->count();
+        $this->peminjamanDitolakUser= \App\Models\PeminjamanAlatHeader::where('status_id',3)->where('user_id', auth()->id())->count();
 
         $this->Inventory = \App\Models\Inventory::count();
         $this->oos = \App\Models\Inventory::where("quantity", "<", 1)->count();

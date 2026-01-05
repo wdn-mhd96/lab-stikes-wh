@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Pages\Dashboard\Listpeminjaman;
 
-use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Notification;
 use Livewire\Component;
 use Livewire\Attributes\Url;
 use Livewire\Attributes\Layout;
@@ -148,5 +148,10 @@ class Detail extends Component
             ]);
         }
 
+    }
+
+    public function cetakForm()
+    {
+        return $this->redirectRoute("formCetak", ["id"=> $this->id]);
     }
 }

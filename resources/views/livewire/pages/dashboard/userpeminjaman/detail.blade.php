@@ -7,9 +7,6 @@
     @else
         <div class="flex justify-between items-center">
             <h1 class="font-bold text-xl md:text-2xl text-gray-600 uppercase">Detail Peminjaman Alat</h1>
-            <div class="flex justify-center items-center gap-2">
-                <a href="{{ route('formCetak', ['id' => $id]) }}" target="_blank" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">Cetak Form</a>
-            </div>
         </div>
 
         <table class="text-gray-500 w-full mt-3">
@@ -77,7 +74,6 @@
             </div>
             @endif
         </div>
-        <form wire:submit.prevent="prosesPengajuan" >
         <table class="w-full border border-gray-300 rounded-lg overflow-hidden">
                 <thead>
                     <tr class="bg-violet-600 text-white">
@@ -85,13 +81,8 @@
                         <th class="px-4 py-2">Nama Alat</th>
                         <th class="px-4 py-2">Kode Alat</th>
                         <th class="px-4 py-2">Qty Diajukan</th>
-                        @if($approve || $peminjaman->status_id == 2)
-                            <th class="px-4 py-2">Qty Disetujui</th>
-                        @endif
-                        @if($peminjaman->status_id == 4)
-                            <th class="px-4 py-2">Qty Disetujui</th>
-                            <th class="px-4 py-2">Qty Dikembalikan</th>
-                        @endif
+                        <th class="px-4 py-2">Qty Disetujui</th>
+                        <th class="px-4 py-2">Qty Dikembalikan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -101,57 +92,17 @@
                         <td class="px-4 py-2 "> {{ $detail->alat->item_name}}</td>
                         <td class="px-4 py-2 text-center"> {{ $detail->alat->item_code}}</td>
                         <td class="px-4 py-2 text-center"> {{ $detail->quantity_diajukan}}</td>
-                        @if($approve)
-                            <td class="px-4 py-2">
-                                <input
-                                    type="number"
-                                    min="0"
-                                    max="{{ $detail->quantity_diajukan }}"
-                                    wire:model.defer="approvedQty.{{ $detail->id }}"
-                                    class="input"
-                                >
-                            </td>
-                        @endif
-                        @if($peminjaman->status_id ==  2)
-                            <td class="px-4 py-2 text-center"> {{ $detail->quantity_disetujui}}</td>
-                            <td class="px-4 py-2">
-                                <input
-                                    type="number"
-                                    min="0"
-                                    max="{{ $detail->quantity_disetujui }}"
-                                    wire:model.defer="returnedQty.{{ $detail->id }}"
-                                    class="input"
-                                >
-                            </td>
-                        @endif
-                        @if($peminjaman->status_id ==  4)
-                            <td class="px-4 py-2 text-center"> {{ $detail->quantity_disetujui}}</td>
-                            <td class="px-4 py-2 text-center"> {{ $detail->quantity_dikembalikan}}</td>
-                        @endif
+                        <td class="px-4 py-2 text-center"> {{ $detail->quantity_disetujui ?? "-"}}</td>
+                        <td class="px-4 py-2 text-center"> {{ $detail->quantity_dikembalikan ?? "-"}}</td>
                     </tr>
                     @endforeach
-                    @if($approve || $reject || $peminjaman->status_id == 2)
-                        <tr class="mt-3"> 
-                            @endphp
-                            <td colspan ="@if($approve) 5 @elseif($peminjaman->status_id == 2) 6 @else 4 @endif">
-                                <textarea wire:model="comment" name="" id="" class="rounded w-full p-3" placeholder="Komentar"></textarea>
-                            </td>
-                        </tr>
-                        <tr class="mt-3">
-                            <td colspan ="@if($approve) 5 @elseif($peminjaman->status_id == 2) 6 @else 4 @endif" class="text-right">
-                                <button type="submit" class="bg-violet-600 text-white py-2 px-4 rounded hover:bg-violet-700">@if($approve) Setujui @elseif($peminjaman->status_id == 2) Selesaikan @else Tolak @endif</button>
-                            </td>
-                        </tr>
-                    @endif
                 </tbody>
             </table>
-        </form>
-
         <div class="flex justify-between items-center my-6">
             <h1 class="font-bold text-xl md:text-2xl text-gray-600 uppercase">History Peminjaman</h1>
         </div>
             <div>
-                @foreach($history as $hist)
+                @foreach($peminjaman->history as $hist)
                     <div class="absolute left-3 top-0 h-full w-px bg-gray-300"></div>
 
                     <!-- Item -->

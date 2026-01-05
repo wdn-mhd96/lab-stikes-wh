@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Livewire\Pages\Dashboard\Userpeminjaman\History;
 use Illuminate\Database\Eloquent\Model;
 
 class PeminjamanAlatHeader extends Model
@@ -47,5 +48,10 @@ class PeminjamanAlatHeader extends Model
     public function ruangan()
     {
         return $this->belongsTo(Ruangan::class, 'ruangan_id', 'id');
+    }
+
+    public function history()
+    {
+        return $this->hasMany(HistoryPerubahan::class, 'peminjaman_id', 'id');
     }
 }
