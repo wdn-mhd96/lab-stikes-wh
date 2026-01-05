@@ -22,11 +22,6 @@
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
                 <div class="mb-4">
-                    <x-input-label for="qty" :value="__('Qty')" />
-                    <x-text-input wire:model="qty" id="qty" class="block mt-1 w-full" type="number" name="qty" />
-                    <x-input-error :messages="$errors->get('qty')" class="mt-2" />
-                </div>
-                <div class="mb-4">
                     <x-input-label for="image" :value="__('Image (Optional)')" />
                     <x-text-input wire:model="image" id="image" class="block mt-1 w-full" type="file" name="image" accept="image/*"/>
                     <x-input-error :messages="$errors->get('image')" class="mt-2" />

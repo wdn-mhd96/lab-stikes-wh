@@ -10,6 +10,7 @@ class Inventory extends Model
         'item_name',
         'item_code',
         'quantity',
+        'quantity_available',
         'disposable',
         'description',
         'image',
@@ -22,4 +23,9 @@ class Inventory extends Model
     protected $casts = [
         'disposable' => 'boolean',
     ];
+
+    public function movement()
+    {
+        return $this->hasMant(inventoryMovement::class, "inventory_id", "id");
+    }
 }

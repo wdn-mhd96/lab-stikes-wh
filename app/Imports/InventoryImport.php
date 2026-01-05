@@ -29,6 +29,7 @@ class InventoryImport implements ToModel, WithStartRow, SkipsEmptyRows, SkipsOnE
             'item_code' => $row[0],
             'item_name' => $row[1],
             'quantity' => (int) $row[2],
+            'quantity_available' => (int) $row[2],
             'disposable' => (bool) $row[3],
         ]);
     }

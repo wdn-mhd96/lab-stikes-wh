@@ -55,7 +55,7 @@
                     @endforeach
                     @if($inventories->isEmpty())
                     <tr>
-                        <td colspan="7" class="px-4 py-2 text-center">Belum ada data inventory.</td>
+                        <td colspan="7" class="px-4 py-2 text-center">Belum ada data inventory Kosong.</td>
                     </tr>
                     @endif  
 

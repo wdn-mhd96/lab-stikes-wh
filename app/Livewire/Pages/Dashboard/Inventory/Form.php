@@ -16,7 +16,6 @@ class Form extends Component
     public $inventoryid;
     public $code;
     public $name;
-    public $qty;
     public $disposable = false;
     public $image;
 
@@ -27,7 +26,6 @@ class Form extends Component
         $this->inventoryid = $data['inventoryid'] ?? null;
         $this->code = $data['code'] ?? '';
         $this->name = $data['name'] ?? '';
-        $this->qty = $data['qty'] ?? 0;
         $this->disposable = $data['disposable'] ?? false;
         $this->image = null;
     }
@@ -44,7 +42,6 @@ class Form extends Component
                         'max:255',\Illuminate\Validation\Rule::unique('inventories', 'item_code')->ignore($this->inventoryid)
                     ],
             'name' => 'required|string|max:255',
-            'qty' => 'required|integer|min:0',
             'disposable' => 'boolean',
             'image' => 'nullable|image|max:2048',
         ];
@@ -55,7 +52,6 @@ class Form extends Component
         $data = [
             'item_code' => $this->code,
             'item_name' => $this->name,
-            'quantity' => $this->qty,
             'disposable' => $this->disposable,
         ];
 
@@ -99,6 +95,6 @@ class Form extends Component
             }
         }
         $this->dispatch('notify', ['title' => 'success', 'text' => 'Inventory berhasil disimpan.', 'icon' => 'success']);
-        $this->reset(["inventoryid", "code", "name", "qty", "disposable", "image"]);
+        $this->reset(["inventoryid", "code", "name", "disposable", "image"]);
     }    
 }

@@ -55,4 +55,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(HistoryPerubahan::class, 'user_id', 'id');
     }
+
+    public function movement()
+    {
+        return $this->hasMany(inventoryMovement::class, "user_id", "id");
+    }
 }

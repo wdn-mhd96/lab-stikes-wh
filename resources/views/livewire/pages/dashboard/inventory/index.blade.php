@@ -1,4 +1,4 @@
-<div x-data="{ open: $wire.entangle('formOpen'), openImport: $wire.entangle('importOpen') }" class="p-6">
+<div x-data="{ open: $wire.entangle('formOpen'), openImport: $wire.entangle('importOpen'), stockOpen : $wire.entangle('stockOpen') }" class="p-6">
     <div>
         <div class="flex justify-between items-center">
             <h1 class="font-bold text-xl md:text-2xl text-gray-600 uppercase">Manajemen Inventory</h1>
@@ -57,6 +57,7 @@
                         <td class="px-4 py-2 flex justify-center gap-2 items-center">
                             <button wire:click="confirmDelete({{ $inventory->id }})"class="bg-red-600 text-white hover:bg-red-700 rounded-md py-1 px-3 text-sm">Hapus</button>
                             <button wire:click="editInventory({{ $inventory->id }})" class="bg-emerald-600 text-white hover:bg-emerald-700 rounded-md py-1 px-3 text-sm">Edit</button>
+                            <button wire:click="addStock({{ $inventory->id }})" class="bg-sky-600 text-white hover:bg-sky-700 rounded-md py-1 px-3 text-sm">Tambah Stock</button>
                         </td>
                     </tr>
                     @endforeach
@@ -74,4 +75,5 @@
     </div>
     <livewire:pages.dashboard.inventory.form />
     <livewire:pages.dashboard.inventory.import />
+    <livewire:pages.dashboard.inventory.stock-add />
 </div>

@@ -13,6 +13,7 @@ class Index extends Component
     use WithPagination, WithoutUrlPagination;
     public $formOpen = false;
     public $importOpen = false;
+    public $stockOpen = false;
     public $search = '';
     public $disposableFilter = 'all';
     #[Layout('layouts.dashboard')]
@@ -57,6 +58,15 @@ class Index extends Component
         $this->dispatch('open-import', []);
         $this->importOpen = true;
     }
+
+    public function addStock($id)
+    {
+        $this->dispatch('open-stock', [
+            "id" => $id
+        ]);
+        $this->stockOpen = true;
+    }
+
     public function confirmDelete($inventoryId)
     {
         $this->dispatch('confirm-delete', [
@@ -80,7 +90,6 @@ class Index extends Component
             'inventoryid' => $inventory->id,
             'code' => $inventory->item_code,
             'name' => $inventory->item_name,
-            'qty' => $inventory->quantity,
             'disposable' => $inventory->disposable,
         ]);
         $this->formOpen = true;
