@@ -119,12 +119,32 @@
 
 <table width="100%" style="table-layout: fixed; margin-top:30px">
     <tr>
+        <th style="width:50%">MENGATAHUI PEMINJAMAN</th>
+        <th style="width:50%">MENGETAHUI PENGEMBALIAN</th>        
+    </tr>
+    <tr>
         <th style="width:50%">Peminjam</th>
-        <th style="width:50%">Admin Lab</th>
+        <th style="width:50%">Peminjam</th>
     </tr>
     <tr style="margin-top:100px;">
-        <td style="width:50%;text-align:center;padding-top:100px;">( {{ $data->nama_peminjam }} )</td>
-        <td style="width:50%;text-align:center;padding-top:100px;">( {{ auth()->user()->name }} )</td>
+        <td style="width:50%;text-align:center;padding-top:70px;">( {{ $data->nama_peminjam }} )</td>
+        <td style="width:50%;text-align:center;padding-top:70px;">( {{ $data->nama_peminjam }} )</td>
+    </tr>
+    <tr>
+        <th style="width:50%">Dosen Penganggung Jawab</th>
+        <th style="width:50%">Dosen Penganggung Jawab</th>
+    </tr>
+    <tr style="margin-top:100px;">
+        <td style="width:50%;text-align:center;padding-top:70px;">( . . . . . . . . . . . . . . )</td>
+        <td style="width:50%;text-align:center;padding-top:70px;">( . . . . . . . . . . . . . . )</td>
+    </tr>
+    <tr>
+        <th style="width:50%">Petgugas Lab</th>
+        <th style="width:50%">Petgugas Lab</th>
+    </tr>
+    <tr style="margin-top:100px;">
+        <td style="width:50%;text-align:center;padding-top:70px;">( {{ auth()->user()->name }} )</td>
+        <td style="width:50%;text-align:center;padding-top:70px;">( {{ auth()->user()->name }} )</td>
     </tr>
 </table>
 </body>

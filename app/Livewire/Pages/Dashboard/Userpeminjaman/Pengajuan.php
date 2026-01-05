@@ -63,7 +63,7 @@ class Pengajuan extends Component
             "nama_peminjam" => $this->nama,
         ];
 
-        $check = \App\Models\PeminjamanAlatHeader::where("user_id", auth()->id())->count();
+        $check = \App\Models\PeminjamanAlatHeader::where("user_id", auth()->id())->whereIn("status_id", [1,2])->count();
         if($check >= 2) {
             $this->dispatch("notify", ['title' => 'error', 'text' => 'Anda Masih Memiliki Peminjaman Aktif, Silahkan Selesaikan Terlebih Dahulu', 'icon' => 'error']);
         }
