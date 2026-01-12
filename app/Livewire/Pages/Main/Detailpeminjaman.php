@@ -18,7 +18,7 @@ class Detailpeminjaman extends Component
     public function render()
     {
         return view('livewire.pages.main.detailpeminjaman',[
-            "peminjamans" => \App\Models\PeminjamanAlatHeader::with(["user", "status"])->where("tanggal_pinjam", $this->date)->get()
+            "peminjamans" => \App\Models\PeminjamanAlatHeader::with(["user", "status", "ruangan"])->where("tanggal_pinjam", $this->date)->get()
         ]);
     }
 }

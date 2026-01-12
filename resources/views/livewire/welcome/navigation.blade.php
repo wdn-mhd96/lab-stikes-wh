@@ -57,6 +57,15 @@
             Alur Proses
             </a>
         </li>
+        <li>
+            <a href="#modul"
+            @click="active = 'modul'; toggled = false"
+            :class="active === 'modul'
+                ? 'text-gray-900 font-semibold'
+                : 'hover:text-gray-700'">
+            Modul Praktikum
+            </a>
+        </li>
     </ul>
         <div class="hidden md:block">
             @auth
