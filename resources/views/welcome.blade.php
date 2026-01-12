@@ -20,5 +20,6 @@
         <livewire:pages.main.alat />
         <livewire:pages.main.ruang />
         <livewire:pages.main.alur />
+        <livewire:pages.main.detailpeminjaman />
     </body>
 </html>

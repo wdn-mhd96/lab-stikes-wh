@@ -8,6 +8,9 @@ class Alat extends Component
 {
     public function render()
     {
-        return view('livewire.pages.main.alat');
+        $inventory = \App\Models\Inventory::orderBy("item_name", "ASC")->limit(20)->get();
+        return view('livewire.pages.main.alat', [
+            "inventory" => $inventory
+        ]);
     }
 }

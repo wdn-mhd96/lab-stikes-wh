@@ -35,7 +35,7 @@
             :class="active === 'alat'
                 ? 'text-gray-900 font-semibold'
                 : 'hover:text-gray-700'">
-            Alat dan Bahan
+            Inventory
             </a>
         </li>
 

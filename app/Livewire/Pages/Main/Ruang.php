@@ -8,6 +8,8 @@ class Ruang extends Component
 {
     public function render()
     {
-        return view('livewire.pages.main.ruang');
+        return view('livewire.pages.main.ruang', [
+            "ruangan" => \App\Models\Ruangan::orderBy("nama_ruangan", "ASC")->get()
+        ]);
     }
 }

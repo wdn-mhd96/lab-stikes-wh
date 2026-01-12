@@ -28,7 +28,7 @@
             <form wire:submit.prevent="ajukanPeminjaman">
                 <div class="mb-4">
                     <x-input-label for="tgl_peminjaman" :value="__('Tanggal Peminjaman')" />
-                    <x-text-input @keydown.prevent wire:model="tgl_peminjaman" id="tgl_peminjaman" class="block mt-1 w-full" type="date" min="{{ now()->addDay()->format('Y-m-d') }}" name="tgl_peminjaman" />
+                    <x-text-input @keydown.prevent wire:model="tgl_peminjaman" id="tgl_peminjaman" class="block mt-1 w-full" type="date" min="{{ now()->addDay()    ->format('Y-m-d') }}" name="tgl_peminjaman" />
                     <x-input-error :messages="$errors->get('tgl_peminjaman')" class="mt-2" />
                 </div>
                 <div class="mb-4">
