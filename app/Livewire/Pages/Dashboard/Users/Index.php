@@ -32,6 +32,13 @@ class Index extends Component
         $this->dispatch('open-user-form', []);
         $this->formOpen = true;
     }
+    public function openAddAdmin()
+    {
+        $this->dispatch('open-user-form', [
+            'admin' => true,
+        ]);
+        $this->formOpen = true;
+    }
     public function confirmDelete($userId)
     {
         $this->dispatch('confirm-delete', [

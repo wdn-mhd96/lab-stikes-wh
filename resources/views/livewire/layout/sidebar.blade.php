@@ -26,6 +26,9 @@
         {{-- <a href="" wire:navigate class="block px-4 py-2 rounded-md text-gray-700 hover:bg-gray-100">
         Ruangan
         </a> --}}
+         <a href="{{ route('admin.manual') }}" wire:navigate class="block px-4 py-2 rounded-md text-gray-700 hover:bg-gray-100 {{ request()->routeIs('admin.manual') ? 'bg-gray-100 font-semibold' : '' }}">
+            Peminjaman Manual
+        </a>
         @endrole
         @role('user')
         <a href="{{ route('user.peminjaman') }}" wire:navigate class="block px-4 py-2 rounded-md text-gray-700 hover:bg-gray-100 {{ request()->routeIs('user.peminjaman') ? 'bg-gray-100 font-semibold' : '' }}">

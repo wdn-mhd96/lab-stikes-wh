@@ -112,7 +112,7 @@
             <td>{{ $detail->alat->item_name}}</td>
             <td style="text-align:center">{{ $detail->quantity_diajukan}}</td>
             <td style="text-align:center">{{ $detail->quantity_disetujui ?? 0}}</td>
-            <td style="text-align:center">{{ $detail->quantity_dikembalikan ?? 0}}</td>
+            <td style="text-align:center">  </td>
         </tr>
     @endforeach
 </table>
@@ -139,8 +139,8 @@
         <td style="width:50%;text-align:center;padding-top:70px;">( . . . . . . . . . . . . . . )</td>
     </tr>
     <tr>
-        <th style="width:50%">Petgugas Lab</th>
-        <th style="width:50%">Petgugas Lab</th>
+        <th style="width:50%">Petugas Lab</th>
+        <th style="width:50%">Petugas Lab</th>
     </tr>
     <tr style="margin-top:100px;">
         <td style="width:50%;text-align:center;padding-top:70px;">( {{ auth()->user()->name }} )</td>

@@ -38,6 +38,18 @@ class StockAdd extends Component
             $before = $check->quantity;
             $check->increment("quantity", $this->qty);
             $check->increment("quantity_available", $this->qty);
+            $check->refresh();
+
+            // 🧾 Inventory movement log
+            \App\Models\InventoryMovement::create([
+                'inventory_id'   => $check->id,
+                'user_id'        => auth()->id(),
+                'quantity'       => $this->qty,
+                'quantity_before'=> $before,
+                'quantity_after' => $check->quantity,
+                'movement_type'  => 'restock', // IN | OUT | ADJUSTMENT
+                'comment'        => 'Tambah stok manual',
+            ]);
             $this->reset();
              $this->dispatch('notify', [
             'title' => 'Berhasil',

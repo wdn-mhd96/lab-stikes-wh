@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('peminjaman_alat_headers', function (Blueprint $table) {
-            $table->string('code')->unique()->after('id');
+            $table->text('bukti_pengembalian')->nullable();
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('peminjaman_alat_headers', function (Blueprint $table) {
-            $table->dropColumn('code');
+         Schema::table('peminjaman_alat_headers', function (Blueprint $table) {
+            $table->dropColumn('bukti_pengembalian');
         });
     }
 };

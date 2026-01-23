@@ -28,6 +28,7 @@
                         <th class="px-4 py-2">Kode</th>
                         <th class="px-4 py-2">Nama</th>
                         <th class="px-4 py-2">Qty</th>
+                        <th class="px-4 py-2">Qty Tersedia</th>
                         <th class="px-4 py-2">Disposable</th>
                         <th class="px-4 py-2">Image</th>
                         <th class="px-4 py-2">action</th>
@@ -41,6 +42,7 @@
                         <td class="px-4 py-2">{{ $inventory->item_code }}</td>
                         <td class="px-4 py-2">{{ $inventory->item_name }}</td>
                         <td class="px-4 py-2 text-center">{{ $inventory->quantity }}</td>
+                        <td class="px-4 py-2 text-center">{{ $inventory->quantity_available }}</td>
                         <td class="px-4 py-2 text-center">
                             <span class="px-2 py-1 rounded-full text-xs font-medium
                                 {{ $inventory->disposable ? 'bg-green-700' : 'bg-red-700' }} text-white">

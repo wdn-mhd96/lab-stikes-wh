@@ -20,6 +20,7 @@ class PeminjamanAlatHeader extends Model
         'nim',
         'nama_peminjam',
         'code',
+        'bukti_pengembalian'
     ];
 
     protected $primaryKey = 'id';

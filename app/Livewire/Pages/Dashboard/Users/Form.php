@@ -12,6 +12,8 @@ class Form extends Component
     public $name;
     public $username;
     public $password;
+
+    public $admin = false;
     #[On('open-user-form')]
     public function openForm($data)
     {
@@ -19,6 +21,7 @@ class Form extends Component
         $this->name = $data['name'] ?? '';
         $this->username = $data['username'] ?? '';
         $this->password = '';
+        $this->admin = $data['admin'] ?? false; 
     }
     public function render()
     {
@@ -63,8 +66,10 @@ class Form extends Component
                 'name' => $this->name,
                 'username' => $this->username,
                 'password' => bcrypt($this->password),
+                'role' => $this->admin ? 'admin' : 'user',
             ]);
-            $user->assignRole('user');
+
+            $this->admin ? $user->assignRole('admin') : $user->assignRole('user');
             
         } catch (\Exception $e) {
             $this->dispatch('notify', ['title' => 'error', 'text' => 'Username sudah digunakan.', 'icon' => 'error']);

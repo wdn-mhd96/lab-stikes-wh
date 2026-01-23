@@ -2,7 +2,11 @@
     <div>
         <div class="flex justify-between items-center">
             <h1 class="font-bold text-xl md:text-2xl text-gray-600 uppercase">Manajemen User</h1>
-            <button wire:click="openAdd" class="bg-violet-600 text-white hover:bg-violet-700 rounded-md py-2 px-4 text-sm">Tambah User</button>
+            <div class="flex items-center gap-2">
+                <button wire:click="openAdd" class="bg-violet-600 text-white hover:bg-violet-700 rounded-md py-2 px-4 text-sm">Tambah User</button>
+                <button wire:click="openAddAdmin" class="bg-emerald-600 text-white hover:bg-emerald-700 rounded-md py-2 px-4 text-sm">Tambah Admin</button>
+
+            </div>
         </div>
         <div class="mt-3 overflow-x-auto">
             <table class="w-full border border-gray-300 rounded-lg overflow-hidden">
